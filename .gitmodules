@@ -1,0 +1,3 @@
+[submodule "leaflet-realtime"]
+	path = leaflet-realtime
+	url = https://github.com/perliedman/leaflet-realtime.git

@@ -122,41 +122,52 @@ class SocketServerThread(Thread):
 
                 if len(rdy_read) > 0:
                     read_data = self.client_sock.recv(255)
-
+                    #print(self.client_sock)
+                    #print(rdy_read)
+                    #print(read_data)
+                    #print(len(read_data))
                     # Check if socket has been closed
                     if len(read_data) == 0:
-                        print('[Thr {}] {} closed the socket.'.format(self.number, self.client_addr))
+                        #print('ciao')
+                        print('[Thr {}] {} porca putrella, non arrivano dati.'.format(self.number, self.client_addr))
+                        #print('[Thr {}] {} closed the socket.'.format(self.number, self.client_addr))
                         self.stop()
                     else:
                         # Strip newlines just for output clarity
                         ip_addr=self.client_addr
-                        print(ip_addr[0])
-                        dati=read_data.rstrip().split()
-                        gnss_data=dati[0].decode('utf-8')
-                        gnss_ora=dati[1].decode('utf-8')
-                        gnss_data_ora="{0} {1}".format(gnss_data, gnss_ora)
-                        # print(type(dati[0].decode('utf-8')))
-                        lat=float(dati[2])
-                        lon=float(dati[3])
-                        quota=float(dati[4])
-                        quality=int(dati[5])
-                        nsat=int(dati[6])
-                        sdn=float(dati[7])
-                        sde=float(dati[8])
-                        sdu=float(dati[9])
-                        sdne=float(dati[10])
-                        sdue=float(dati[11])
-                        sdun=float(dati[12])
-                        age=float(dati[13])
-                        ratio=float(dati[14])
-                        #print('[Thr {}] Received {}'.format(self.number, read_data.rstrip()))
-                        query='INSERT INTO demo_rfi.posizioni(thread, ip, data, lat, lon, ' \
-                              'quota, quality, nsat, sde, sdn, sdu, sdne, sdue, sdun, age, ratio)' \
-                              ' VALUES ({}, \'{}\', \'{}\', {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},' \
-                              ' {});'.format(self.number, ip_addr[0], gnss_data_ora, lat, lon, quota,
-                                             quality, nsat, sde, sdn, sdu, sdne, sdue, sdun, age, ratio);
-                        print(query)
-                        curr.execute(query)
+                        #print(ip_addr[0])
+                        try:
+                            dati=read_data.rstrip().split()
+                            gnss_data=dati[0].decode('utf-8')
+                            gnss_ora=dati[1].decode('utf-8')
+                            gnss_data_ora="{0} {1}".format(gnss_data, gnss_ora)
+                            # print(type(dati[0].decode('utf-8')))
+                            lat=float(dati[2])
+                            lon=float(dati[3])
+                            quota=float(dati[4])
+                            quality=int(dati[5])
+                            nsat=int(dati[6])
+                            sdn=float(dati[7])
+                            sde=float(dati[8])
+                            sdu=float(dati[9])
+                            sdne=float(dati[10])
+                            sdue=float(dati[11])
+                            sdun=float(dati[12])
+                            age=float(dati[13])
+                            ratio=float(dati[14])
+                            #print('[Thr {}] Received {}'.format(self.number, read_data.rstrip()))
+                            query='INSERT INTO demo_rfi.posizioni(thread, ip, data, lat, lon, ' \
+                                'quota, quality, nsat, sde, sdn, sdu, sdne, sdue, sdun, age, ratio)' \
+                                ' VALUES ({}, \'{}\', \'{}\', {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},' \
+                                ' {});'.format(self.number, ip_addr[0], gnss_data_ora, lat, lon, quota,
+                                                quality, nsat, sde, sdn, sdu, sdne, sdue, sdun, age, ratio);
+                            #print(query)
+                            curr.execute(query)
+                            print('{} - Data saved on PostgreSQL'.format(ip_addr[0]))
+                        except:
+                            print('*******************************')
+                            print('String not complete from IP {}'.format(ip_addr[0]))
+                            print('*******************************')
 
 
 
