@@ -1,3 +1,6 @@
 [submodule "leaflet-realtime"]
 	path = leaflet-realtime
 	url = https://github.com/perliedman/leaflet-realtime.git
+[submodule "bootstrap"]
+	path = bootstrap
+	url = https://github.com/twbs/bootstrap.git
