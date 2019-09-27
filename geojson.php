@@ -1,18 +1,16 @@
 <?php
 session_start();
 include 'conn.php';
-
+include 'interval.php';
 
 if(!$conn) {
     die('Connessione fallita !<br />');
 } else {
 	//$idcivico=$_GET["id"];
-	$query="create or replace view demo_rfi.terminali as 
-		select ip , max(data) as data from demo_rfi.posizioni group by ip;
-		select a.ip, a.data, ST_AsGeoJson(st_makepoint(b.lon, b.lat, b.quota)) as geo, b.quality
-		from demo_rfi.terminali a 
+	$query="select a.ip, a.data, ST_AsGeoJson(st_makepoint(b.lon, b.lat, b.quota)) as geo, b.quality
+		from (select ip , max(data) as data from demo_rfi.posizioni group by ip) a 
 		join demo_rfi.posizioni b on a.ip= b.ip and a.data = b.data
-		where b.data > (SELECT current_timestamp at time zone 'UTC'- (2500 ||' minutes')::interval);"; // da metter 0.2 (2 decimi di minuto)
+		where b.data > (SELECT current_timestamp at time zone 'UTC'- (".$interval." ||' minutes')::interval);"; // da metter 0.2 (2 decimi di minuto)
     
     //echo $query;
 
