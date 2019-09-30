@@ -14,7 +14,7 @@
 
 # variables containing paths to the configuration files 
 PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin
-CONF=/home/local/COMGE/egter01/emergenze-pcge/pages/eventi
+CONF=/home/ubuntu/gnss_webgis_client
 
 sleep 20
 
@@ -27,6 +27,6 @@ sleep 20
 # RPM chkconfig avvio_bot.sh on
 
 
-python3 $CONF/forever.py $CONF/socket_server_single_thread.py
+python3 $CONF/forever.py $CONF/socket_server.py
 
 echo "FINE SCRIPT AVVIO TELGRAM BOT DAEMON"

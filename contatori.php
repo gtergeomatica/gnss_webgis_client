@@ -15,7 +15,9 @@ if(!$conn) {
 from (select ip , max(data) as data from demo_rfi.posizioni group by ip) a
 join demo_rfi.posizioni b on a.ip = b.ip and a.data = b.data
 JOIN demo_rfi.aree c on st_intersects(st_setsrid(st_makepoint(b.lon,b.lat),4326),c.geom)
-where c.tipo ilike 'danger' and b.data > (SELECT current_timestamp at time zone 'UTC'- (".$interval." ||' minutes')::interval);"; // da metter 0.2 (2 decimi di minuto)
+where c.tipo ilike 'danger' 
+and b.data > (SELECT current_timestamp at time zone 'UTC'- (".$interval." ||' minutes')::interval)
+and b.data < (SELECT current_timestamp at time zone 'UTC'+ (10*".$interval." ||' minutes')::interval);"; // da metter 0.2 (2 decimi di minuto)
     //echo $query;
     $result = pg_query($conn, $query);
 
@@ -28,7 +30,9 @@ where c.tipo ilike 'danger' and b.data > (SELECT current_timestamp at time zone 
 from (select ip , max(data) as data from demo_rfi.posizioni group by ip) a
 join demo_rfi.posizioni b on a.ip = b.ip and a.data = b.data
 JOIN demo_rfi.aree c on st_intersects(st_setsrid(st_makepoint(b.lon,b.lat),4326),c.geom)
-where c.tipo ilike 'safety' and b.data > (SELECT current_timestamp at time zone 'UTC'- (".$interval." ||' minutes')::interval);"; // da metter 0.2 (2 decimi di minuto)
+where c.tipo ilike 'safety' 
+and b.data > (SELECT current_timestamp at time zone 'UTC'- (".$interval." ||' minutes')::interval)
+and b.data < (SELECT current_timestamp at time zone 'UTC'+ (10*".$interval." ||' minutes')::interval);"; // da metter 0.2 (2 decimi di minuto)
     
     $result = pg_query($conn, $query);
 
@@ -40,7 +44,8 @@ where c.tipo ilike 'safety' and b.data > (SELECT current_timestamp at time zone 
 	$query="select count(a.ip) as count_ip_connessi
 from (select ip , max(data) as data from demo_rfi.posizioni group by ip) a
 join demo_rfi.posizioni b on a.ip = b.ip and a.data = b.data
-where b.data > (SELECT current_timestamp at time zone 'UTC'- (".$interval." ||' minutes')::interval);"; // da metter 0.2 (2 decimi di minuto)
+where b.data > (SELECT current_timestamp at time zone 'UTC'- (".$interval." ||' minutes')::interval)
+and b.data < (SELECT current_timestamp at time zone 'UTC'+ (10*".$interval." ||' minutes')::interval);"; // da metter 0.2 (2 decimi di minuto)
     
     $result = pg_query($conn, $query);
 
@@ -53,6 +58,12 @@ where b.data > (SELECT current_timestamp at time zone 'UTC'- (".$interval." ||' 
 	pg_close($conn);
 	
 	
+
+	$result=$rows[0]['count_ip_connessi']-$rows[0]['count_danger'];
+	
+	$check = array("count_fuori_aree"=>$result);
+	//echo $result;
+	array_push($rows, $check);
 	
 	if (empty($rows)==FALSE){
 		//print $rows;
