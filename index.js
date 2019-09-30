@@ -9,7 +9,7 @@ function createRealtimeLayer1(url, container) {
         container: container,
         onEachFeature(f, l) {
             l.bindPopup(function() {
-                return '<h3>' + f.properties.ip + '</h3>' +
+                return '<h3>' + f.properties.name + '</h3>' +
                     '<p>' + new Date(f.properties.data) +
                     '<br/>Quality: <strong>' + f.properties.quality + '</strong></p>';
             });
@@ -90,12 +90,19 @@ realtime1 = createRealtimeArea('http://demo.gter.it/demo_rfi/aree_d.php').addTo(
 
 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-     maxZoom: 22,
+     maxZoom: 26,
   maxNativeZoom: 19
     
 }).addTo(map);
 
+L.control.scale({imperial: false}).addTo(map);
+
+
 
 realtime.once('update', function() {
-    map.fitBounds(realtime.getBounds(), {maxZoom: 20});
+	if (realtime.getBounds().isValid()){
+    	map.fitBounds(realtime.getBounds(), {maxZoom: 20});
+   } else {
+   	map.fitBounds(realtime1.getBounds(), {maxZoom: 20});
+	}
 });
