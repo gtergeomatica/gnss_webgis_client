@@ -14,12 +14,13 @@
 
 # variables containing paths to the configuration files 
 PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin
-CONF=/home/ubuntu/gnss_webgis_client
+CONF=/home/gter/gnss_webgis_client
 
 sleep 20
 
 #cd $CONF
 
+# change CONF PATH
 # dentro /etc/init.d
 # sudo ln -s $CONF/avvio_bot.sh
 # chmod +x /etc/init.d/avvio_bot.sh
