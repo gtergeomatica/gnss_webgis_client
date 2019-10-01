@@ -33,7 +33,7 @@ This class will contain the following methods:
 
 
 class SocketServer(Thread):
-    def __init__(self, host = '0.0.0.0', port = 8081, max_clients = 5):
+    def __init__(self, host = '0.0.0.0', port = credenziali.port, max_clients = 5):
         """ Initialize the server with a host and port to listen to.
         Provide a list of functions that will be used when receiving specific data """
         Thread.__init__(self)
