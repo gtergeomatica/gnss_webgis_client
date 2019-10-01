@@ -149,7 +149,7 @@ html, body
     	<th data-field="name" data-sortable="true">Device</th>
       <!--th data-field="ip" data-sortable="true">IP</th-->
       <th data-field="data" data-sortable="true">Data e ora UTC</th>
-      <th data-field="quality" data-sortable="true">Quality</th>
+      <th data-field="quality" data-formatter="nameFormatter_q" data-sortable="true">Quality</th>
       <th data-field="dist" data-sortable="true">Dist</th>
     </tr>
   </thead>
@@ -159,6 +159,16 @@ html, body
   function mounted() {
     $('#table').bootstrapTable()
   }
+  function nameFormatter_q(value) {
+        if (value==1){
+        		return '<i class="fas fa-check-double" title="Precisione centimetrica" style="color:#007c37"></i>';
+        } else if (value==2 ) {
+        	   return '<i class="fas fa-check" title="Precisione decimetrica" style="color:#007c37"></i>';
+        }
+    }
+  
+  
+  
 </script>
 
 	<br>

@@ -10,8 +10,7 @@ function createRealtimeLayer1(url, container) {
         onEachFeature(f, l) {
             l.bindPopup(function() {
                 return '<h3>' + f.properties.name + '</h3>' +
-                    '<p>' + new Date(f.properties.data) +
-                    '<br/>Quality: <strong>' + f.properties.quality + '</strong></p>';
+                    '<p><br/>Quality: <strong>' + f.properties.quality + '</strong>';
             });
         }
     });

@@ -10,8 +10,8 @@ function createRealtimeLayer1(url, container) {
         onEachFeature(f, l) {
             l.bindPopup(function() {
                 return '<h3>' + f.properties.name + '</h3>' +
-                    '<p>' + new Date(f.properties.data) +
-                    '<br/>Quality: <strong>' + f.properties.quality + '</strong></p>';
+                    '<!--p>' + new Date(f.properties.data) +
+                    '</p--><p><br/>Quality: <strong>' + f.properties.quality + '</strong>';
             });
         }
     });
@@ -95,7 +95,7 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     
 }).addTo(map);
 
-L.control.scale(imperial="false").addTo(map);
+L.control.scale({imperial: false}).addTo(map);
 
 
 

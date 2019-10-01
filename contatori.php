@@ -59,8 +59,14 @@ and b.data < (SELECT current_timestamp at time zone 'UTC'+ (10*".$interval." ||'
 	
 	
 
-	$result=$rows[0]['count_ip_connessi']-$rows[0]['count_danger'];
 	
+	//echo count($rows)."<br>";
+	//echo $rows[0]."<br>";
+	//print_r(array_values($rows));
+	//echo $rows[1]['count_safety']."<br>";
+	//echo $rows[2]['count_ip_connessi']."<br>";
+	//echo $rows[0]['count_danger']."<br>";
+	$result=$rows[2]['count_ip_connessi']-$rows[0]['count_danger']-$rows[1]['count_safety'];
 	$check = array("count_fuori_aree"=>$result);
 	//echo $result;
 	array_push($rows, $check);
