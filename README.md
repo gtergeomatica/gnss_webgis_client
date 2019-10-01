@@ -9,7 +9,12 @@ git submodule add https://github.com/twbs/bootstrap.git
 git submodule add https://github.com/wenzhixin/bootstrap-table.git
 
 
-## .gitignore files
+## Step 1 - Restore DB
+
+Use the schema_demo.sql file
+
+
+## Step 2 - Add .gitignore files
 
 credenziali.py
 
