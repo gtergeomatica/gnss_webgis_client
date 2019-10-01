@@ -46,3 +46,15 @@ $token = "XXXXX";
 $chatid = array("XXXX","XXXX"); // insert chat id in 
 ?>
 ```
+## Step 3 Start scocket automnatically at system boot
+
+1. you have to put the correct path in order to launch the script that turns the socket on at the system boot 
+change CONF PATH
+
+2) sudo ln -s $CONF/avvio_socket.sh
+
+3) sudo chmod +x /etc/init.d/avvio_socket.sh
+
+4) 
+ON DEBIAN update-rc.d avvio_socket.sh defaults
+ON RPM chkconfig avvio_socket.sh on
