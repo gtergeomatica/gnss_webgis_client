@@ -1,0 +1,190 @@
+-- script to create the Schema of PostgreSQL / PostGIS geoDB where the data are stored
+-- user= gter
+-- schema_name= demo_rfi
+
+
+
+-- Schema: demo_rfi
+-- DROP SCHEMA demo_rfi;
+CREATE SCHEMA demo_rfi
+  AUTHORIZATION gter;
+  
+
+  -- Table: demo_rfi.posizioni
+
+-- DROP TABLE demo_rfi.posizioni;
+
+CREATE TABLE demo_rfi.posizioni
+(
+  thread integer,
+  ip character varying,
+  data timestamp without time zone,
+  lat double precision,
+  lon double precision,
+  quota real,
+  quality integer,
+  nsat integer,
+  sdn real,
+  sde real,
+  sdu real,
+  sdne real,
+  sdue real,
+  sdun real,
+  age real,
+  ratio real
+)
+WITH (
+  OIDS=FALSE
+);
+
+
+-- Table: demo_rfi.ip_list
+
+-- DROP TABLE demo_rfi.ip_list;
+
+CREATE TABLE demo_rfi.ip_list
+(
+  ip character varying,
+  name character varying NOT NULL,
+  CONSTRAINT pkey_list PRIMARY KEY (name)
+)
+WITH (
+  OIDS=FALSE
+);
+
+-- Table: demo_rfi.pericolo
+
+-- DROP TABLE demo_rfi.pericolo;
+
+CREATE TABLE demo_rfi.pericolo
+(
+  start timestamp without time zone NOT NULL,
+  "end" timestamp without time zone,
+  CONSTRAINT pkey_pericolo PRIMARY KEY (start)
+)
+WITH (
+  OIDS=FALSE
+);
+
+
+
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.5.19
+-- Dumped by pg_dump version 11.5 (Ubuntu 11.5-1.pgdg18.04+1)
+
+-- Started on 2019-10-01 14:53:54 CEST
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 202 (class 1259 OID 161472)
+-- Name: aree; Type: TABLE; Schema: demo_rfi; Owner: gter
+--
+
+CREATE TABLE demo_rfi.aree (
+    fid integer NOT NULL,
+    geom public.geometry(MultiPolygon,4326),
+    id bigint,
+    tipo character varying(80)
+);
+
+
+ALTER TABLE demo_rfi.aree OWNER TO gter;
+
+--
+-- TOC entry 201 (class 1259 OID 161470)
+-- Name: aree_fid_seq; Type: SEQUENCE; Schema: demo_rfi; Owner: gter
+--
+
+CREATE SEQUENCE demo_rfi.aree_fid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE demo_rfi.aree_fid_seq OWNER TO gter;
+
+--
+-- TOC entry 3519 (class 0 OID 0)
+-- Dependencies: 201
+-- Name: aree_fid_seq; Type: SEQUENCE OWNED BY; Schema: demo_rfi; Owner: gter
+--
+
+ALTER SEQUENCE demo_rfi.aree_fid_seq OWNED BY demo_rfi.aree.fid;
+
+
+--
+-- TOC entry 3385 (class 2604 OID 161475)
+-- Name: aree fid; Type: DEFAULT; Schema: demo_rfi; Owner: gter
+--
+
+ALTER TABLE ONLY demo_rfi.aree ALTER COLUMN fid SET DEFAULT nextval('demo_rfi.aree_fid_seq'::regclass);
+
+
+--
+-- TOC entry 3513 (class 0 OID 161472)
+-- Dependencies: 202
+-- Data for Name: aree; Type: TABLE DATA; Schema: demo_rfi; Owner: gter
+--
+
+COPY demo_rfi.aree (fid, geom, id, tipo) FROM stdin;
+2	0106000020E61000000100000001030000000100000011000000BA04F54B88CF2140CDDB50571D3C46405C1F21258CCF2140CDDB50571D3C46405C1F21258CCF2140D154F5431C3C4640DCB16A1E8BCF2140CCFB24C71A3C46406BAD387A8ACF214035407E96193C4640FC5EE0F08DCF2140C0DD2AFE183C4640FF14BA0B92CF2140B3D0B8BD183C46405DFA8D328ECF2140B5D21F5A183C46402BE493FD8ACF2140CCCB4DD6173C4640095CB11D86CF2140C292BEF4163C4640C8B79F9384CF2140C6610197163C46401634EF5780CF2140C955CFCF153C4640F661E6927FCF214088CF62E1153C46401559824A7ECF2140E4E2D421163C4640D82024F684CF2140362D684E183C46407A3B50CF88CF214053CB0B711B3C4640BA04F54B88CF2140CDDB50571D3C4640	2	Danger
+3	0106000020E6100000010000000103000000010000000E0000001634EF5780CF2140C955CFCF153C4640C8B79F9384CF2140C6610197163C4640095CB11D86CF2140C292BEF4163C46402BE493FD8ACF2140CCCB4DD6173C46405DFA8D328ECF2140B5D21F5A183C4640FF14BA0B92CF2140B3D0B8BD183C46406266416896CF2140A278424D193C4640ED2BCAC19CCF214032D22E491A3C46400FD93F949FCF2140EBE412CA1A3C46406A633BC6A4CF21409A8386111A3C4640BA3A637F97CF21408F00ABF0173C46409A32EC8687CF21408682F3C9153C4640C015A75B83CF2140C65AAF05153C46401634EF5780CF2140C955CFCF153C4640	3	Safety
+1	0106000020E6100000010000000103000000010000000B000000B46CE108F9CE2140C5B411DF023C464057FBC053FECE214043925B55033C46407E73876102CF214010A85C09043C4640BD8AC8B207CF21409BDD1A4C033C464079A8E3E3FECE2140424B34A0013C4640BA4F039FEACE2140E168C44C003C46408A12CE6FDCCE2140CB480158FF3B46400579AEBFD8CE21400B7F502F003C4640BA8DA523E3CE2140E14F1F83013C4640BA47D996F0CE2140976B3554023C4640B46CE108F9CE2140C5B411DF023C4640	1	Safety
+4	0106000020E6100000010000000103000000010000000700000031B46418F0CE214031D3A926053C46405017DD360DCF2140379DFDBE053C46407E73876102CF214010A85C09043C464057FBC053FECE214043925B55033C4640BA47D996F0CE2140976B3554023C464081E68DF7EFCE2140E581C27C043C464031B46418F0CE214031D3A926053C4640	1	Danger
+5	0106000020E61000000100000001030000000100000006000000664D6294CCDB2140BE6A312D75344640A8C3A03154DB21401CF304027A344640F398BD9A59DB21402FC77158453446404BB843D2AEDB2140F1AF01D753344640D90253B3BDDB2140870F110F63344640664D6294CCDB2140BE6A312D75344640	\N	Safety
+\.
+
+
+--
+-- TOC entry 3520 (class 0 OID 0)
+-- Dependencies: 201
+-- Name: aree_fid_seq; Type: SEQUENCE SET; Schema: demo_rfi; Owner: gter
+--
+
+SELECT pg_catalog.setval('demo_rfi.aree_fid_seq', 5, true);
+
+
+--
+-- TOC entry 3387 (class 2606 OID 161477)
+-- Name: aree aree_pkey; Type: CONSTRAINT; Schema: demo_rfi; Owner: gter
+--
+
+ALTER TABLE ONLY demo_rfi.aree
+    ADD CONSTRAINT aree_pkey PRIMARY KEY (fid);
+
+
+--
+-- TOC entry 3388 (class 1259 OID 161481)
+-- Name: sidx_aree_geom; Type: INDEX; Schema: demo_rfi; Owner: gter
+--
+
+CREATE INDEX sidx_aree_geom ON demo_rfi.aree USING gist (geom);
+
+
+-- Completed on 2019-10-01 14:53:54 CEST
+
+--
+-- PostgreSQL database dump complete
+--
+
+
