@@ -1,3 +1,6 @@
 credenziali.py
 credenziali2.py
+conn.php
 
+*.pyc
+__pycache__
