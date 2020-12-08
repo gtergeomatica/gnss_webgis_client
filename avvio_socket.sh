@@ -14,7 +14,7 @@
 
 # variables containing paths to the configuration files 
 PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin
-CONF=/home/gter/gnss_webgis_client
+CONF=/home/gter/REPOSITORY/gnss_webgis_client
 
 sleep 20
 

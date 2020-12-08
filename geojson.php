@@ -2,6 +2,9 @@
 session_start();
 include 'conn.php';
 include 'interval.php';
+$name=$_GET['n'];
+
+
 
 if(!$conn) {
     die('Connessione fallita !<br />');
@@ -12,7 +15,11 @@ if(!$conn) {
 		from (select ip , max(data) as data from demo_rfi.posizioni group by ip) a 
 		join demo_rfi.posizioni b on a.ip= b.ip and a.data = b.data
 		left join demo_rfi.ip_list l ON a.ip=l.ip
-		where b.data > (SELECT current_timestamp at time zone 'UTC'- (".$interval." ||' minutes')::interval)
+		where ";
+    if($name!=''){
+      $query= $query. " l.name = '".$name."' and ";
+    }
+    $query= $query. " b.data > (SELECT current_timestamp at time zone 'UTC'- (".$interval." ||' minutes')::interval)
 		and b.data < (SELECT current_timestamp at time zone 'UTC'+ (10*".$interval." ||' minutes')::interval);"; // da metter 0.2 (2 decimi di minuto)
     
     //echo $query."<br>";

@@ -8,7 +8,7 @@ if(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
 }
 $nome=$_GET['n'];
 
-print('Gentile '.$nome. ' il tuo Ip è '.$ip.'<br>');
+print('Gentile '.$nome. ' abbiamo associato il tuo nominativo al seguente indirizzo IP:'.$ip.'<br>');
 
 include 'conn.php';
 $page = $_SERVER['PHP_SELF'];
@@ -38,7 +38,7 @@ if(!$conn) {
 	} else {
 		$query="INSERT INTO demo_rfi.ip_list (ip,name) VALUES ('".$ip."' ,'".$nome."');";
 	}
-	echo $query;
+	//echo $query;
 	$result = pg_query($conn, $query);
 	pg_close($conn);
 }
