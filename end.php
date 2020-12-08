@@ -17,7 +17,8 @@ if(!$conn) {
 
 
 for ($i = 0; $i < count($chatid); ++$i) {
-	sendMessage($chatid[$i],"Fine situazione pericolo. Puoi uscire dall'area di sicurezza.",$token);
+	sendMessage($chatid[$i],"\xE2\x9C\x85 Fine situazione pericolo.
+Puoi uscire dall'area di sicurezza. \xE2\x9C\x85 ",$token);
 	//echo $chatid[$i];
 }
 
